@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pesapal Payment Integration</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #004aad;
+            color: white;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            padding: 12px;
+            background-color: #004aad;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background-color: #003680;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pesapal Payment Integration</h1>
+    <div class="container">
+        <h2>Make Payment</h2>
+        <form method="POST" action="/payment/initiate">
+            <div>
+                <label>Environment:</label>
+                <select name="environment" required>
+                    <option value="sandbox">Sandbox</option>
+                    <option value="production">Production</option>
+                </select>
+            </div>
+            <div>
+                <label>Amount:</label>
+                <input type="number" name="amount" step="0.01" required>
+            </div>
+            <div>
+                <label>Currency:</label>
+                <select name="currency" required>
+                    <option value="KES">KES</option>
+                    <option value="USD">USD</option>
+                    <option value="UGX">UGX</option>
+                    <option value="TZS">TZS</option>
+                </select>
+            </div>
+            <div>
+                <label>Description:</label>
+                <input type="text" name="description" required>
+            </div>
+            <div>
+                <label>Customer Email:</label>
+                <input type="email" name="customer_email" required>
+            </div>
+            <div>
+                <label>Customer Phone:</label>
+                <input type="text" name="phone_number">
+            </div>
+            <button type="submit">Proceed to Payment</button>
+        </form>
+    </div>
+</body>
+</html>
