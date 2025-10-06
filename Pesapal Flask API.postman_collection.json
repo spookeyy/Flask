@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "618028fa-2b65-4913-b238-36ca4ec259b7",
+		"name": "Pesapal Flask API",
+		"description": "Complete Pesapal Integration Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36771206"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment Methods",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/payment/methods?environment={{environment}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"payment",
+						"methods"
+					],
+					"query": [
+						{
+							"key": "environment",
+							"value": "{{environment}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initiate Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "environment",
+							"value": "{{environment}}",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "1500.00",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "KES",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Test Product Purchase",
+							"type": "text"
+						},
+						{
+							"key": "customer_email",
+							"value": "customer@example.com",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "254793057720",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/payment/initiate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"payment",
+						"initiate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Payment Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/payment/status/{{order_tracking_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"payment",
+						"status",
+						"{{order_tracking_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/orders",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulate Callback (GET)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/payment/callback?OrderTrackingId={{order_tracking_id}}&OrderMerchantReference=TEST123",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"payment",
+						"callback"
+					],
+					"query": [
+						{
+							"key": "OrderTrackingId",
+							"value": "{{order_tracking_id}}"
+						},
+						{
+							"key": "OrderMerchantReference",
+							"value": "TEST123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulate IPN Notification (POST)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OrderTrackingId\": \"{{order_tracking_id}}\",\n    \"OrderMerchantReference\": \"TEST123\",\n    \"Status\": \"COMPLETED\",\n    \"PaymentMethod\": \"MPESA\",\n    \"Description\": \"Payment completed successfully\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/payment/callback",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"payment",
+						"callback"
+					]
+				}
+			},
+			"response": []
+		},
+	{
+    "name": "Register IPN",
+    "request": {
+      "method": "POST",
+      "header": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\n    \"environment\": \"sandbox\"\n}"
+      },
+      "url": {
+        "raw": "{{base_url}}/payment/register-ipn",
+        "host": ["{{base_url}}"],
+        "path": ["payment", "register-ipn"]
+      }
+    },
+    "response": []
+  }
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "order_tracking_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "environment",
+			"value": "sandbox",
+			"type": "string"
+		}
+	]
+}
